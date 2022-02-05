@@ -19,10 +19,11 @@ import com.revrobotics.SparkMaxRelativeEncoder.Type;
 public final class Constants {
 //Drive Train 
     //speed controller motortype and id 
-    public static final int DRIVETRAIN_DMOTOR1_ID = 1;
+    public static final int DRIVETRAIN_DMOTOR1_ID = 5;
     public static final MotorType DRIVETRAIN_DMOTOR1_MOTORTYPE = MotorType.kBrushless;
 
-    public static final int DRIVETRAIN_DMOTOR2_ID = 2;
+    
+    public static final int DRIVETRAIN_DMOTOR2_ID = 6;
     public static final MotorType DRIVETRAIN_DMOTOR2_MOTORTYPE = MotorType.kBrushless;
 
     public static final int DRIVETRAIN_DMOTOR3_ID = 3;
@@ -52,7 +53,7 @@ public final class Constants {
     public static final int ROBOTCONTAINER_JOYSTICK1_PORTNUMBER = 0;
     public static final int ROBOTCONTAINER_JOYSTICK2_PORTNUMBER = 1;
     public static final int ROBOTCONTAINER_HIDCONTROLLER_PORTNUMBER = 2;
-
+    public static final int ROBOTCONTAINER_JOYSTICK_BASE_MODESWITCH_ID = 7;
 }
 
 
