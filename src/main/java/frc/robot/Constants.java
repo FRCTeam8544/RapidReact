@@ -19,22 +19,31 @@ import com.revrobotics.SparkMaxRelativeEncoder.Type;
 public final class Constants {
 //Drive Train 
     //speed controller motortype and id 
-    public static final int DRIVETRAIN_DMOTOR1_ID = 5;
+    public static final int DRIVETRAIN_DMOTOR1_ID = 1; 
     public static final MotorType DRIVETRAIN_DMOTOR1_MOTORTYPE = MotorType.kBrushless;
 
     
-    public static final int DRIVETRAIN_DMOTOR2_ID = 6;
+    public static final int DRIVETRAIN_DMOTOR2_ID = 2;
     public static final MotorType DRIVETRAIN_DMOTOR2_MOTORTYPE = MotorType.kBrushless;
 
-    public static final int DRIVETRAIN_DMOTOR3_ID = 3;
+    public static final int DRIVETRAIN_DMOTOR3_ID = 3; 
     public static final MotorType DRIVETRAIN_DMOTOR3_MOTORTYPE = MotorType.kBrushless;
 
     public static final int DRIVETRAIN_DMOTOR4_ID = 4;
     public static final MotorType DRIVETRAIN_DMOTOR4_MOTORTYPE = MotorType.kBrushless;
 
+    public static final int SHOOTER_MOTOR1_ID = 2; 
+    public static final MotorType SHOOTER_MOTOR1_MOTORTYPE = MotorType.kBrushless;
+
+    public static final int SHOOTER_MOTOR2_ID = 1; 
+    public static final MotorType SHOOTER_MOTOR2_MOTORTYPE = MotorType.kBrushless;
+
     //lead speed controller inversion settings ^values have not been tested
     public static final boolean DRIVETRAIN_DMOTOR1_INVERSION = false;
-    public static final boolean DRIVEMOTOR_DMOTOR3_INVERSION = true;
+    public static final boolean DRIVEMOTOR_DMOTOR2_INVERSION = true;
+
+    public static final boolean SHOOTER_MOTOR2_INVERSION = false;
+    public static final boolean SHOOTER_MOTOR1_INVERSION = true;
     
     //encoder type and CPR &define CPR
     public static final Type DRIVETRAIN_ENCODERDM1_ENCODERTYPE = Type.kHallSensor;
@@ -54,6 +63,13 @@ public final class Constants {
     public static final int ROBOTCONTAINER_JOYSTICK2_PORTNUMBER = 1;
     public static final int ROBOTCONTAINER_HIDCONTROLLER_PORTNUMBER = 2;
     public static final int ROBOTCONTAINER_JOYSTICK_BASE_MODESWITCH_ID = 7;
+
+
+
+    public static final int ROBOTCONTAINER_BUTTON_NUMBER_B = 3;
+	public static final int ROBOTCONTAINER_BUTTON_NUMBER_X = 1;
+	public static final int ROBOTCONTAINER_BUTTON_NUMBER_Y = 4;
+    public static final int ROBOTCONTAINER_BUTTON_NUMBER_A = 2;
 }
 
 

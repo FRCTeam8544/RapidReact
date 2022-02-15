@@ -8,16 +8,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
-public class ArcadeDrive extends CommandBase {
+public class DriveControl extends CommandBase {
   /** Creates a new TankDrive. */
   DriveTrain m_driveTrain;
+  RampUp rampup;
   double leftJoystickPercentage;
   double rightJoystickPercentage;
+  //"tank" or "arcade"
   String driveType;
 
-  public ArcadeDrive(DriveTrain drive) {
+  public DriveControl(DriveTrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
-    
+    rampup = new RampUp("DriveControl", 100);
     driveType = "tank";
     m_driveTrain = drive;
     addRequirements(drive);
@@ -36,7 +38,7 @@ public class ArcadeDrive extends CommandBase {
 
 
 
-  public double leftDrivePercentage() {
+  public double rightDrivePercentage() {
     double Y = RobotContainer.joystick1.getY();
     double X = RobotContainer.joystick1.getX();
 
@@ -47,7 +49,7 @@ public class ArcadeDrive extends CommandBase {
    return Y*Math.abs(Y);
   }
 
-  public double rightDrivePercentage() {
+  public double leftDrivePercentage() {
     double Y = RobotContainer.joystick1.getY();
     double X = RobotContainer.joystick1.getX();
     
@@ -58,15 +60,34 @@ public class ArcadeDrive extends CommandBase {
    return Y*Math.abs(Y);
   }
 
+  //arbitrary value 0.02 used for stationary robot
+  public boolean isMoving() {
+    if (driveType.equals("arcade")) {
+      if (Math.abs(rightDrivePercentage()) < 0.1 
+      && Math.abs(leftDrivePercentage()) < 0.1) {
+        return false;
+      }
+    }
+    if (driveType.equals("tank")) {
+      if (Math.abs(RobotContainer.joystick1.getRawAxis(1)) < 0.1 
+      && Math.abs(RobotContainer.joystick2.getRawAxis(1)) < 0.1) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    rampup.setActive(isMoving());
+    rampup.execute();
     if (driveType.equals("arcade")) {
-    leftJoystickPercentage = leftDrivePercentage();
-    rightJoystickPercentage = rightDrivePercentage();
+    leftJoystickPercentage = leftDrivePercentage() * rampup.speedMultiplier();
+    rightJoystickPercentage = rightDrivePercentage() *rampup.speedMultiplier();
     } else {
-      leftJoystickPercentage = RobotContainer.joystick1.getRawAxis(1);
-    rightJoystickPercentage = RobotContainer.joystick2.getRawAxis(1);
+      rightJoystickPercentage = RobotContainer.joystick1.getRawAxis(1) * rampup.speedMultiplier();
+    leftJoystickPercentage = RobotContainer.joystick2.getRawAxis(1) * rampup.speedMultiplier();
     }
 
     m_driveTrain.tankDrive(leftJoystickPercentage, rightJoystickPercentage);

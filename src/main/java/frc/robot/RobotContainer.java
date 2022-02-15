@@ -9,10 +9,11 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.TankDrive;
+//import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.commands.ArcadeDrive;
+import frc.robot.subsystems.Shooter;
+import frc.robot.commands.DriveControl;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -32,19 +33,21 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain m_drivetrain = new DriveTrain();
+ // private final Shooter m_shooter = new Shooter();
+ 
   
 
   //robot commands 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-  private final TankDrive m_tankDrive = new TankDrive(m_drivetrain);
-  private final ArcadeDrive m_arcadeDrive = new ArcadeDrive(m_drivetrain);
+  //private final TankDrive m_tankDrive = new TankDrive(m_drivetrain);
+  private final DriveControl m_driveControl = new DriveControl(m_drivetrain);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
 
     //defining default commands
-    m_drivetrain.setDefaultCommand(m_arcadeDrive);
+    m_drivetrain.setDefaultCommand(m_driveControl);
   }
 
   /**
@@ -58,16 +61,28 @@ public class RobotContainer {
     JoystickButton button2 = new JoystickButton(joystick2, Constants.ROBOTCONTAINER_JOYSTICK_BASE_MODESWITCH_ID);
     button1.and(button2).whenActive(() -> this.SwitchDriveMode());
 
+
+   /* new JoystickButton(HIDController, Constants.ROBOTCONTAINER_BUTTON_NUMBER_X)
+  .whenPressed(() -> m_shooter.setShooterSpeed("blue"))
+  .whenReleased(() -> m_shooter.stopShooter());
+
+  new JoystickButton(HIDController, Constants.ROBOTCONTAINER_BUTTON_NUMBER_Y)
+  .whenPressed(() -> m_shooter.setShooterSpeed("yellow"))
+  .whenReleased(() -> m_shooter.stopShooter());
+
+  new JoystickButton(HIDController, Constants.ROBOTCONTAINER_BUTTON_NUMBER_A)
+  .whenPressed(() -> m_shooter.setShooterSpeed("green"))
+  .whenReleased(() -> m_shooter.stopShooter()); */
   }
 
 
   public void SwitchDriveMode() {
-    if (m_arcadeDrive.getDriveType().equals("tank")) {
-        m_arcadeDrive.setDriveType("arcade");
+    if (m_driveControl.getDriveType().equals("tank")) {
+        m_driveControl.setDriveType("arcade");
         SmartDashboard.putString("DriveType", "arcade");
       } else {
-        m_arcadeDrive.setDriveType("tank");
-        SmartDashboard.putString("DriveType", "arcade");
+        m_driveControl.setDriveType("tank");
+        SmartDashboard.putString("DriveType", "tank");
       }
   }
   /**
