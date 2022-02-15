@@ -35,7 +35,7 @@ public class DriveTrain extends SubsystemBase {
   DifferentialDrive robotDrive;
 
   public DriveTrain() {
-
+    
     //speed controllers for drive wheels 
     driveMotor1 = new CANSparkMax(Constants.DRIVETRAIN_DMOTOR1_ID, Constants.DRIVETRAIN_DMOTOR1_MOTORTYPE);
     driveMotor2 = new CANSparkMax(Constants.DRIVETRAIN_DMOTOR2_ID, Constants.DRIVETRAIN_DMOTOR2_MOTORTYPE);
@@ -50,11 +50,11 @@ public class DriveTrain extends SubsystemBase {
 
     //inverted lead motors 
     driveMotor1.setInverted(Constants.DRIVETRAIN_DMOTOR1_INVERSION);
-    driveMotor3.setInverted(Constants.DRIVEMOTOR_DMOTOR3_INVERSION);
+    driveMotor2.setInverted(Constants.DRIVEMOTOR_DMOTOR2_INVERSION);
 
     //setting follow settings for 2 and 3 (2 follows 1 and 3 follows 4) &may need to change based on wiring
-    driveMotor2.follow(driveMotor1);
-    driveMotor4.follow(driveMotor3);
+    driveMotor3.follow(driveMotor1);
+    driveMotor4.follow(driveMotor2);
 
     //setting each encoder for each individual speed controller (make that variable equal to the encoder connected to that speed controller)
     encoderDM1 = driveMotor1.getEncoder(Constants.DRIVETRAIN_ENCODERDM1_ENCODERTYPE, Constants.DRIVETRAIN_ENCODERDM1_CPR);
@@ -63,8 +63,8 @@ public class DriveTrain extends SubsystemBase {
     encoderDM4 = driveMotor1.getEncoder(Constants.DRIVETRAIN_ENCODERDM4_ENCODERTYPE, Constants.DRIVETRAIN_ENCODERDM4_CPR);
 
     //&
-    leftDM = new MotorControllerGroup(driveMotor1, driveMotor2);
-    rightDM = new MotorControllerGroup(driveMotor3, driveMotor4);
+    leftDM = new MotorControllerGroup(driveMotor2, driveMotor4);
+    rightDM = new MotorControllerGroup(driveMotor1, driveMotor3);
 
     robotDrive = new DifferentialDrive(leftDM, rightDM);
 
