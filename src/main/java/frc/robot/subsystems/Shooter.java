@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
@@ -20,9 +22,11 @@ public class Shooter extends SubsystemBase {
   RelativeEncoder shooter1Encoder;
   RelativeEncoder shooter2Encoder;
 
-  SparkMaxPIDController shooterPIDController;
+  VictorSPX feeder;
 
-  double kP;
+  //SparkMaxPIDController shooterPIDController;
+
+  /*double kP;
   double kI;
   double kD;
   double kIz;
@@ -37,7 +41,7 @@ public class Shooter extends SubsystemBase {
   double iz;
   double ff;
   double max;
-  double min;
+  double min;*/
 
   public Shooter() {
     shooterWheel2 = new CANSparkMax(Constants.SHOOTER_MOTOR2_ID, Constants.SHOOTER_MOTOR2_MOTORTYPE);
@@ -53,9 +57,11 @@ public class Shooter extends SubsystemBase {
     shooter2Encoder = shooterWheel2.getEncoder();
     shooter1Encoder = shooterWheel1.getEncoder();
 
-    shooterPIDController = shooterWheel2.getPIDController();
+    feeder = new VictorSPX(Constants.SHOOTER_FEED_MOTOR_ID);
 
-    shooterPIDController.setP(kP);
+    //shooterPIDController = shooterWheel2.getPIDController();
+
+    /*shooterPIDController.setP(kP);
     shooterPIDController.setI(kI);
     shooterPIDController.setD(kD);
     shooterPIDController.setIZone(kIz);
@@ -70,7 +76,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Min Output: " , minOutput);
     SmartDashboard.putNumber("Max Output: ", maxOutput);
     
-    
+    */
   }
 
   //method to set specific speeds
@@ -79,10 +85,7 @@ public class Shooter extends SubsystemBase {
   //@change shooter speeds to correct values
   //@
   public void setShooterSpeed(String button){
-    if (button == "red"){
-      shooterWheel2.set(.2);
-    }
-    else if (button == "blue"){
+    if (button == "blue"){
       shooterWheel2.set(.5);
     }
     else if (button == "green"){
@@ -101,10 +104,23 @@ public class Shooter extends SubsystemBase {
     shooterWheel2.set(0);
   }
 
+  public void runFeederIn() {
+    feeder.set(VictorSPXControlMode.PercentOutput, 0.75);
+  }
+  public void runFeederOut() {
+    feeder.set(VictorSPXControlMode.PercentOutput, -0.75);
+  }
+
+  public void stopFeeder() {
+    feeder.set(VictorSPXControlMode.PercentOutput, 0);
+  }
+
+
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    p = SmartDashboard.getNumber("P Gain: ", 0);
+    /*p = SmartDashboard.getNumber("P Gain: ", 0);
     i = SmartDashboard.getNumber("I Gain: ", 0);
     d = SmartDashboard.getNumber("D Gain: ", 0);
     iz = SmartDashboard.getNumber("I Zone: ", 0);
@@ -146,6 +162,6 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Processed Variable: ", shooter2Encoder.getVelocity());
 
 
-    
+    */
   }  
 }

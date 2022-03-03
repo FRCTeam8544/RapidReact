@@ -7,30 +7,33 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.RampUp;
 
 public class DriveControl extends CommandBase {
   /** Creates a new TankDrive. */
   DriveTrain m_driveTrain;
-  RampUp rampup;
+  //rampup instances for separate drivetrain values
+  //tankdrive: right/left, arcadedrive: movement/rotation
+  RampUp rampup1;
+  RampUp rampup2;
+  //tankdrive values
   double leftJoystickPercentage;
   double rightJoystickPercentage;
-  //"tank" or "arcade"
-  String driveType;
+  //arcadedrive values
+  double xJoystickSpeed;
+  double zJoystickRotation;
+ 
+
 
   public DriveControl(DriveTrain drive) {
     // Use addRequirements() here to declare subsystem dependencies.
-    rampup = new RampUp("DriveControl", 100);
-    driveType = "tank";
+    rampup1 = new RampUp("DriveControl1", 25);
+    rampup2 = new RampUp("DriveControl2", 25);
     m_driveTrain = drive;
     addRequirements(drive);
   }
 
-  public void setDriveType(String type) {
-    driveType = type;
-  }
-  public String getDriveType() {
-    return driveType;
-  }
+  
 
   // Called when the command is initially scheduled.
   @Override
@@ -38,7 +41,7 @@ public class DriveControl extends CommandBase {
 
 
 
-  public double rightDrivePercentage() {
+  /*public double rightDrivePercentage() {
     double Y = RobotContainer.joystick1.getY();
     double X = RobotContainer.joystick1.getX();
 
@@ -58,19 +61,20 @@ public class DriveControl extends CommandBase {
       if (Y == 0) return -X*Math.abs(X);
   
    return Y*Math.abs(Y);
-  }
+  }*/
 
-  //arbitrary value 0.02 used for stationary robot
+
+  //arbitrary value 0.1 used for stationary robot
   public boolean isMoving() {
-    if (driveType.equals("arcade")) {
-      if (Math.abs(rightDrivePercentage()) < 0.1 
-      && Math.abs(leftDrivePercentage()) < 0.1) {
+    if (m_driveTrain.getDriveType().equals("arcade")) {
+      if (Math.abs(xJoystickSpeed) < 0.1 
+      && Math.abs(zJoystickRotation) < 0.1) {
         return false;
       }
     }
-    if (driveType.equals("tank")) {
-      if (Math.abs(RobotContainer.joystick1.getRawAxis(1)) < 0.1 
-      && Math.abs(RobotContainer.joystick2.getRawAxis(1)) < 0.1) {
+    if (m_driveTrain.getDriveType().equals("tank")) {
+      if (Math.abs(leftJoystickPercentage) < 0.1 
+      && Math.abs(rightJoystickPercentage) < 0.1) {
         return false;
       }
     }
@@ -80,23 +84,40 @@ public class DriveControl extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    rampup.setActive(isMoving());
-    rampup.execute();
-    if (driveType.equals("arcade")) {
-    leftJoystickPercentage = leftDrivePercentage() * rampup.speedMultiplier();
-    rightJoystickPercentage = rightDrivePercentage() *rampup.speedMultiplier();
+    if (!isMoving()) {
+      //ensures that values are rounded down when low enough
+      rampup1.setTarget(0);
+      rampup2.setTarget(0);
+    } 
+    
+    if (m_driveTrain.getDriveType().equals("arcade")) {
+      xJoystickSpeed = RobotContainer.joystick1.getY();
+      zJoystickRotation = RobotContainer.joystick1.getX();
+      //set targets to gradually increase to
+      rampup1.setTarget(xJoystickSpeed);
+      rampup2.setTarget(-zJoystickRotation);
+      //set speed to value from rampup
+    m_driveTrain.arcadeDrive(rampup1.getSpeed(), rampup2.getSpeed());
     } else {
-      rightJoystickPercentage = RobotContainer.joystick1.getRawAxis(1) * rampup.speedMultiplier();
-    leftJoystickPercentage = RobotContainer.joystick2.getRawAxis(1) * rampup.speedMultiplier();
+      rightJoystickPercentage = RobotContainer.joystick1.getRawAxis(1);
+    leftJoystickPercentage = RobotContainer.joystick2.getRawAxis(1);
+    //set targets to gradually increase to
+    rampup1.setTarget(rightJoystickPercentage);
+    rampup2.setTarget(leftJoystickPercentage);
+    //set speed to value from rampup
+    m_driveTrain.tankDrive(rampup2.getSpeed(), rampup1.getSpeed());
     }
-
-    m_driveTrain.tankDrive(leftJoystickPercentage, rightJoystickPercentage);
+    //run math
+    rampup1.execute();
+    rampup2.execute();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_driveTrain.tankDrive(0, 0);
+    m_driveTrain.arcadeDrive(0, 0);
   }
 
   // Returns true when the command should end.

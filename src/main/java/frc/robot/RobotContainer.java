@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.HiddenAction;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
@@ -12,10 +14,10 @@ import frc.robot.commands.ExampleCommand;
 //import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.DriveControl;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
@@ -33,7 +35,8 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain m_drivetrain = new DriveTrain();
- // private final Shooter m_shooter = new Shooter();
+  private final Shooter m_shooter = new Shooter();
+  private final Intake m_intake = new Intake();
  
   
 
@@ -62,7 +65,7 @@ public class RobotContainer {
     button1.and(button2).whenActive(() -> this.SwitchDriveMode());
 
 
-   /* new JoystickButton(HIDController, Constants.ROBOTCONTAINER_BUTTON_NUMBER_X)
+    new JoystickButton(HIDController, Constants.ROBOTCONTAINER_BUTTON_NUMBER_X)
   .whenPressed(() -> m_shooter.setShooterSpeed("blue"))
   .whenReleased(() -> m_shooter.stopShooter());
 
@@ -72,18 +75,38 @@ public class RobotContainer {
 
   new JoystickButton(HIDController, Constants.ROBOTCONTAINER_BUTTON_NUMBER_A)
   .whenPressed(() -> m_shooter.setShooterSpeed("green"))
-  .whenReleased(() -> m_shooter.stopShooter()); */
+  .whenReleased(() -> m_shooter.stopShooter()); 
+
+
+
+  new JoystickButton(HIDController, Constants.ROBOTCONTAINER_BUTTON_PNEUMATIC_TOGGLE)
+  .whenPressed(() -> m_intake.toggle());
+
+  new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_INTAKE_MOTOR_OUT)
+  .whenPressed(() -> m_intake.runMotorBackward())
+  .whenReleased(() -> m_intake.stopMotor());
+
+  new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_INTAKE_MOTOR_IN)
+  .whenPressed(() -> m_intake.runMotorForward())
+  .whenReleased(() -> m_intake.stopMotor());
+
+  new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_SHOOTER_FEED_IN)
+  .whenPressed(() -> m_shooter.runFeederIn())
+  .whenReleased(() -> m_shooter.stopFeeder());
+
+  new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_SHOOTER_FEED_OUT)
+  .whenPressed(() -> m_shooter.runFeederOut())
+  .whenReleased(() -> m_shooter.stopFeeder());
   }
 
 
   public void SwitchDriveMode() {
-    if (m_driveControl.getDriveType().equals("tank")) {
-        m_driveControl.setDriveType("arcade");
-        SmartDashboard.putString("DriveType", "arcade");
+    if (m_drivetrain.getDriveType().equals("tank")) {
+        m_drivetrain.setDriveType("arcade");
       } else {
-        m_driveControl.setDriveType("tank");
-        SmartDashboard.putString("DriveType", "tank");
+        m_drivetrain.setDriveType("tank");
       }
+      SmartDashboard.putString("DriveType", m_drivetrain.getDriveType());
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
