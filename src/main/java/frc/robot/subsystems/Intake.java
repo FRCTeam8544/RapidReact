@@ -6,15 +6,21 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
   DoubleSolenoid intakeExtension;
   VictorSPX intakeMotor;
+  ColorSensorV3 colorSensor;
+  ColorMatch colorMatch;
   
 
   /* Creates a new Intake. */
@@ -26,6 +32,8 @@ public class Intake extends SubsystemBase {
     Constants.INTAKE_PNEUMATICS_FORWARD, Constants.INTAKE_PNEUMATICS_REVERSE);
     intakeExtension.set(Value.kReverse);
     intakeMotor = new VictorSPX(Constants.INTAKE_MOTOR_ID);
+    colorSensor = new ColorSensorV3(Port.kOnboard);
+
   }
 
   public void toggle() {
@@ -50,5 +58,7 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+ 
+
   }
 }

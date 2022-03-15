@@ -23,8 +23,8 @@ public class DriveTrain extends SubsystemBase {
   CANSparkMax driveMotor4;
 
   //DM# = drive motor #
-  RelativeEncoder encoderDM1;
-  RelativeEncoder encoderDM2;
+  public RelativeEncoder encoderDM1;
+  public RelativeEncoder encoderDM2;
   RelativeEncoder encoderDM3;
   RelativeEncoder encoderDM4;
 
@@ -87,6 +87,12 @@ public class DriveTrain extends SubsystemBase {
 
   public void arcadeDrive(double xSpeed, double zRotation){
     robotDrive.arcadeDrive(xSpeed, zRotation);
+  }
+  public void resetEncoders() {
+    encoderDM1.setPosition(0);
+    encoderDM2.setPosition(0);
+    encoderDM3.setPosition(0);
+    encoderDM4.setPosition(0);
   }
 
   @Override
