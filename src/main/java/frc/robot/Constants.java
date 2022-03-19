@@ -86,6 +86,7 @@ public final class Constants {
     public static final int ROBOTCONTAINER_CONTROLLER_INTAKE_MOTOR_OUT = 6;
     public static final int ROBOTCONTAINER_CONTROLLER_CLIMB_ARM_EXTEND = 10;
     public static final int ROBOTCONTAINER_CONTROLLER_CLIMB_ARM_RETRACT = 9;
+    public static final int ROBOTCONTAINER_CONTROLLER_OVERRIDE_FEEDER = 12;
 
     //joystick
     public static final int ROBOTCONTAINER_JOYSTICK_BASE_MODESWITCH_ID = 7;

@@ -8,8 +8,9 @@ import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
+//import com.revrobotics.SparkMaxPIDController;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,6 +24,9 @@ public class Shooter extends SubsystemBase {
   RelativeEncoder shooter2Encoder;
 
   VictorSPX feeder;
+  DigitalInput feederLimitSwitch;
+  boolean allowLimitChecks;
+  boolean totalLimitOverride;
 
   //SparkMaxPIDController shooterPIDController;
 
@@ -42,6 +46,7 @@ public class Shooter extends SubsystemBase {
   double ff;
   double max;
   double min;*/
+  double setPoint;
 
   public Shooter() {
     shooterWheel2 = new CANSparkMax(Constants.SHOOTER_MOTOR2_ID, Constants.SHOOTER_MOTOR2_MOTORTYPE);
@@ -61,6 +66,15 @@ public class Shooter extends SubsystemBase {
 
     //shooterPIDController = shooterWheel2.getPIDController();
 
+    /*kP = 0.00005;
+    kI = 0;
+    kD = 0;
+    kIz = 0;
+    kFF = 0.000015;
+    maxOutput = 1;
+    minOutput = 0;*/
+    setPoint = 0;
+
     /*shooterPIDController.setP(kP);
     shooterPIDController.setI(kI);
     shooterPIDController.setD(kD);
@@ -74,9 +88,13 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("I Zone: ", kIz);
     SmartDashboard.putNumber("Feed Forward Gain: ", kFF);
     SmartDashboard.putNumber("Min Output: " , minOutput);
-    SmartDashboard.putNumber("Max Output: ", maxOutput);
+    SmartDashboard.putNumber("Max Output: ", maxOutput);*/
+
     
-    */
+    
+    feederLimitSwitch = new DigitalInput(0);
+    totalLimitOverride = false;
+
   }
 
   //method to set specific speeds
@@ -86,13 +104,13 @@ public class Shooter extends SubsystemBase {
   //@
   public void setShooterSpeed(String button){
     if (button == "blue"){
-      shooterWheel2.set(.5);
+      setPoint = 0.5 ;
     }
     else if (button == "green"){
-      shooterWheel2.set(.8);
+      setPoint = 0;
     }
     else if (button == "yellow"){
-      shooterWheel2.set(1);
+      setPoint = 1 ;
     }
     else {
       SmartDashboard.putString("SetShooterSpeed: ", "No button pressed");
@@ -100,18 +118,28 @@ public class Shooter extends SubsystemBase {
 }
 
   //sets both shooter speed controllers to zero (i.e. stopping the motors)
-  public void stopShooter(){
+  /*public void stopShooter(){
     shooterWheel2.set(0);
-  }
+  }*/
 
   public void runFeederIn() {
-    feeder.set(VictorSPXControlMode.PercentOutput, 0.75);
+    if (feederLimitSwitch.get()) {
+      feeder.set(VictorSPXControlMode.PercentOutput, 0.40); 
+    }
   }
+
+  public void runFeederInOverride() {
+      totalLimitOverride = true;
+    feeder.set(VictorSPXControlMode.PercentOutput, 0.75); 
+  }
+
   public void runFeederOut() {
-    feeder.set(VictorSPXControlMode.PercentOutput, -0.75);
+    totalLimitOverride = true;
+    feeder.set(VictorSPXControlMode.PercentOutput, -0.40);
   }
 
   public void stopFeeder() {
+    totalLimitOverride = false;
     feeder.set(VictorSPXControlMode.PercentOutput, 0);
   }
 
@@ -154,14 +182,18 @@ public class Shooter extends SubsystemBase {
       minOutput = min;
     }
 
-    double setPoint = 100;
+    
 
-    shooterPIDController.setReference(setPoint, CANSparkMax.ControlType.kVelocity);
+    shooterPIDController.setReference(setPoint, CANSparkMax.ControlType.kSmartVelocity);
 
     SmartDashboard.putNumber("SetPoint", setPoint);
-    SmartDashboard.putNumber("Processed Variable: ", shooter2Encoder.getVelocity());
+    SmartDashboard.putNumber("Processed Variable: ", shooter2Encoder.getVelocity());*/
 
-
-    */
+    shooterWheel2.set(setPoint);
+    
+    if (!totalLimitOverride) 
+        if (!feederLimitSwitch.get()) {
+          stopFeeder();
+        }
   }  
 }
