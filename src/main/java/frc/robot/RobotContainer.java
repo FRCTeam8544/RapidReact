@@ -36,7 +36,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
-  private final Intake m_intake = Intake.getInstance();
+  private final Intake m_intake = new Intake();
  
   
 
@@ -82,8 +82,6 @@ public class RobotContainer {
   new JoystickButton(HIDController, Constants.ROBOTCONTAINER_BUTTON_PNEUMATIC_TOGGLE)
   .whenPressed(() -> m_intake.toggle());
 
-
-  // TODO: Update the intake calls to work with the state machine as opposed to direct control
   new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_INTAKE_MOTOR_OUT)
   .whenPressed(() -> m_intake.runMotorBackward())
   .whenReleased(() -> m_intake.stopMotor());

@@ -13,8 +13,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
-  private static Intake intake = null;
-  public IntakeSTM intakeSTM;
   DoubleSolenoid intakeExtension;
   VictorSPX intakeMotor;
   
@@ -24,30 +22,14 @@ public class Intake extends SubsystemBase {
   
 
   public Intake() {
-    intakeSTM = new IntakeSTM(this, false, false); // Setup state machines with default empty states. Should be fine even if full as the transitions will occur within a few ticks
     intakeExtension = new DoubleSolenoid(Constants.PNEUMATICS_PCM_ID, Constants.INTAKE_PNEUMATICS_TYPE, 
     Constants.INTAKE_PNEUMATICS_FORWARD, Constants.INTAKE_PNEUMATICS_REVERSE);
     intakeExtension.set(Value.kReverse);
     intakeMotor = new VictorSPX(Constants.INTAKE_MOTOR_ID);
   }
 
-  public static Intake getInstance() {
-    if (intake == null) {
-      intake = new Intake();
-    }
-    return intake;
-  }
-
   public void toggle() {
     intakeExtension.toggle();
-  }
-
-  public void setIntakeOut() {
-    intakeExtension.set(Value.kForward);
-  }
-
-  public void setIntakeIn() {
-    intakeExtension.set(Value.kReverse);
   }
 
   public void runMotorForward() {
@@ -68,12 +50,5 @@ public class Intake extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // TODO: Get data from sensors. feeder_full will need to be retrieved from the Shooter subsystem
-    // Uncomment the following when the state machine is ready to go. Currently it does nothing
-    /*
-    boolean feeder_full = false;
-    boolean hopper_full = false;
-    this.intakeSTM.tick(feeder_full, hopper_full);
-    */
   }
 }
