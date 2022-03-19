@@ -19,6 +19,38 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    // RIO Ports
+    public static final int DIO_0 = 0;
+    public static final int DIO_1 = 1;
+    public static final int DIO_2 = 2;
+    public static final int DIO_3 = 3;
+    public static final int DIO_4 = 4;
+    public static final int DIO_5 = 5;
+    public static final int DIO_6 = 6;
+    public static final int DIO_7 = 7;
+    public static final int DIO_8 = 8;
+    public static final int DIO_9 = 9;
+
+    // OI
+    //  [B]utton [B]ox
+    //    [B]uttons
+    public static final int BB_B_A = 1;
+    public static final int BB_B_B = 2;
+    public static final int BB_B_X = 3;
+    public static final int BB_B_Y = 4;
+    public static final int BB_B_LB = 5;
+    public static final int BB_B_RB = 6;
+    public static final int BB_B_SHARE = 7;
+    public static final int BB_B_OPTIONS = 8;
+    public static final int BB_B_SL = 9;
+    public static final int BB_B_SR = 10;
+    //     [A]xes
+    public static final int BB_A_LT = 2;
+    public static final int BB_A_RT = 3;
+    //     [POV] aka dpad
+    public static final int BB_POV = 0;
+
+
 //Drive Train 
     //speed controller motortype and id 
     public static final int DRIVETRAIN_DMOTOR1_ID = 1; 
@@ -63,10 +95,15 @@ public final class Constants {
     public static final Type DRIVETRAIN_ENCODERDM4_ENCODERTYPE = Type.kHallSensor;
     public static final int DRIVETRAIN_ENCODERDM4_CPR = 0;
 
+    // Limit switches
+    public static final int SHOOTER_FEEDER_LIMITSWITCH = DIO_0;
+    public static final int INTAKE_HOPPER_LIMITSWITCH = DIO_1;
+
     //Joystick port #s
     public static final int ROBOTCONTAINER_JOYSTICK1_PORTNUMBER = 0;
     public static final int ROBOTCONTAINER_JOYSTICK2_PORTNUMBER = 1;
     public static final int ROBOTCONTAINER_HIDCONTROLLER_PORTNUMBER = 2;
+    public static final int ROBOTCONTAINER_BUTTONBOX_PORTNUMBER = 3;
 
 
 
@@ -87,6 +124,14 @@ public final class Constants {
     public static final int ROBOTCONTAINER_CONTROLLER_CLIMB_ARM_EXTEND = 10;
     public static final int ROBOTCONTAINER_CONTROLLER_CLIMB_ARM_RETRACT = 9;
     public static final int ROBOTCONTAINER_CONTROLLER_OVERRIDE_FEEDER = 12;
+
+    // Button box
+    public static final int BUTTON_INTAKE_LOAD_BALL1 = BB_B_X; // Ball 1 (position 1) is the primary one, i.e. in the shooter about to be shot
+    public static final int BUTTON_INTAKE_LOAD_BALL2 = BB_B_A; // Ball 2 (position 2) is the secondary one, i.e. in the hopper waiting to be loaded
+    public static final int BUTTON_INTAKE_MANUAL_IN = BB_B_LB; // Manually extend the intake
+    public static final int BUTTON_INTAKE_MANUAL_OUT = BB_B_RB; // Manually retract the intake
+    public static final int BUTTON_INTAKE_MANUAL_ROLL_IN = BB_B_Y; // Manually activate the intake rollers inward
+    public static final int BUTTON_INTAKE_MANUAL_ROLL_OUT = BB_B_B; // Manually activate the intake rollers outward
 
     //joystick
     public static final int ROBOTCONTAINER_JOYSTICK_BASE_MODESWITCH_ID = 7;

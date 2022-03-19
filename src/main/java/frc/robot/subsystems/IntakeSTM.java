@@ -56,6 +56,8 @@ public class IntakeSTM {
         this.feeder_full = feeder_full;
         this.hopper_full = hopper_full;
 
+        IntakeSTM_State last_state = this.state;
+
         switch(this.state) {
             case UNINITIALIZED:
                 if (!this.hopper_full) {
@@ -134,7 +136,8 @@ public class IntakeSTM {
                 if (!this.manual_intake_in
                     && !this.manual_intake_out
                     && !this.manual_intake_roll_in
-                    && !this.manual_intake_roll_out) {
+                    && !this.manual_intake_roll_out
+                    && (ball1_button || ball2_button)) {
                     // Exciting manual override state
                     if (this.hopper_full) {
                         this.state = IntakeSTM_State.HOPPER_LOADED;
@@ -160,6 +163,10 @@ public class IntakeSTM {
             default:
                 System.err.println("ERROR: Unknown state encountered. This should not happen and is likely the result of a new state being added but not fully implemented");
                 break;
+        }
+
+        if (last_state != this.state) {
+            System.out.println("INFO: IntakeSTM state transitioned from " + last_state + " to " this.state);
         }
     }
 

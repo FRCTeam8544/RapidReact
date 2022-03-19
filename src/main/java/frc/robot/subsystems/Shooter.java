@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
+  private static Shooter shooter = null;
   /** Creates a new Shooter. */
   CANSparkMax shooterWheel1;
   CANSparkMax shooterWheel2;
@@ -92,9 +93,16 @@ public class Shooter extends SubsystemBase {
 
     
     
-    feederLimitSwitch = new DigitalInput(0);
+    feederLimitSwitch = new DigitalInput(Constants.SHOOTER_FEEDER_LIMITSWITCH);
     totalLimitOverride = false;
 
+  }
+
+  public static Shooter getInstance() {
+    if (shooter == null) {
+      shooter = new Shooter();
+    }
+    return shooter;
   }
 
   //method to set specific speeds
@@ -143,7 +151,9 @@ public class Shooter extends SubsystemBase {
     feeder.set(VictorSPXControlMode.PercentOutput, 0);
   }
 
-
+public boolean isFeederFull() {
+    return this.feederLimitSwitch.get();
+}
 
   @Override
   public void periodic() {

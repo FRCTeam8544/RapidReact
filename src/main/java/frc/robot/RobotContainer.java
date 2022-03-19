@@ -32,11 +32,12 @@ public class RobotContainer {
   public static final Joystick joystick1 = new Joystick(Constants.ROBOTCONTAINER_JOYSTICK1_PORTNUMBER);
   public static final Joystick joystick2 = new Joystick(Constants.ROBOTCONTAINER_JOYSTICK2_PORTNUMBER);
   public static final Joystick HIDController = new Joystick(Constants.ROBOTCONTAINER_HIDCONTROLLER_PORTNUMBER);
+  public static final Joystick buttonBox = new Joystick(Constants.ROBOTCONTAINER_BUTTONBOX_PORTNUMBER);
 
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final DriveTrain m_drivetrain = new DriveTrain();
-  private final Shooter m_shooter = new Shooter();
+  private final Shooter m_shooter = Shooter.getInstance();
   private final Intake m_intake = Intake.getInstance();
  
   
@@ -106,6 +107,31 @@ public class RobotContainer {
   new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_OVERRIDE_FEEDER)
   .whenPressed(() -> m_shooter.runFeederInOverride())
   .whenReleased(() -> m_shooter.stopFeeder());
+
+    // Button box mappings
+    new JoystickButton(buttonBox, Constants.BUTTON_INTAKE_LOAD_BALL1)
+            .whenPressed(() -> Intake.getInstance().update_ball1_button(true))
+            .whenReleased(() -> Intake.getInstance().update_ball1_button(false));
+
+    new JoystickButton(buttonBox, Constants.BUTTON_INTAKE_LOAD_BALL2)
+            .whenPressed(() -> Intake.getInstance().update_ball2_button(true))
+            .whenReleased(() -> Intake.getInstance().update_ball2_button(false));
+
+    new JoystickButton(buttonBox, Constants.BUTTON_INTAKE_MANUAL_IN)
+            .whenPressed(() -> Intake.getInstance().update_manual_intake_in(true))
+            .whenReleased(() -> Intake.getInstance().update_manual_intake_in(false));
+
+    new JoystickButton(buttonBox, Constants.BUTTON_INTAKE_MANUAL_OUT)
+            .whenPressed(() -> Intake.getInstance().update_manual_intake_out(true))
+            .whenReleased(() -> Intake.getInstance().update_manual_intake_out(false));
+
+    new JoystickButton(buttonBox, Constants.BUTTON_INTAKE_MANUAL_ROLL_IN)
+            .whenPressed(() -> Intake.getInstance().update_manual_intake_roll_in(true))
+            .whenReleased(() -> Intake.getInstance().update_manual_intake_roll_in(false));
+
+    new JoystickButton(buttonBox, Constants.BUTTON_INTAKE_MANUAL_ROLL_OUT)
+            .whenPressed(() -> Intake.getInstance().update_manual_intake_roll_out(true))
+            .whenReleased(() -> Intake.getInstance().update_manual_intake_roll_out(false));
   }
 
 

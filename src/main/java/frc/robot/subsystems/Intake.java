@@ -23,6 +23,7 @@ public class Intake extends SubsystemBase {
   VictorSPX intakeMotor;
   ColorSensorV3 colorSensor;
   ColorMatch colorMatch;
+  DigitalInput hopperLimitSwitch;
   
 
   /* Creates a new Intake. */
@@ -36,7 +37,7 @@ public class Intake extends SubsystemBase {
     intakeExtension.set(Value.kReverse);
     intakeMotor = new VictorSPX(Constants.INTAKE_MOTOR_ID);
     colorSensor = new ColorSensorV3(Port.kOnboard);
-
+    hopperLimitSwitch = new DigitalInput(Constants.INTAKE_HOPPER_LIMITSWITCH);
   }
 
   public static Intake getInstance() {
@@ -70,18 +71,17 @@ public class Intake extends SubsystemBase {
     intakeMotor.set(VictorSPXControlMode.PercentOutput, 0.75);
   }
 
-
+  public boolean isHopperFull() {
+    return this.hopperLimitSwitch.get();
+  }
 
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // TODO: Get data from sensors. feeder_full will need to be retrieved from the Shooter subsystem
-    // Uncomment the following when the state machine is ready to go. Currently it does nothing
-    /*
-    boolean feeder_full = false;
-    boolean hopper_full = false;
+    // Get data from sensors. feeder_full is retrieved from the Shooter subsystem
+    boolean feeder_full = Shooter.getInstance().isFeederFull();
+    boolean hopper_full = this.isHopperFull();
     this.intakeSTM.tick(feeder_full, hopper_full);
-    */
   }
 }
