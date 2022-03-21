@@ -28,9 +28,9 @@ public class Intake extends SubsystemBase {
   
 
   public Intake() {
-    intakeExtension = new DoubleSolenoid(Constants.PNEUMATICS_PCM_ID, Constants.INTAKE_PNEUMATICS_TYPE, 
-    Constants.INTAKE_PNEUMATICS_FORWARD, Constants.INTAKE_PNEUMATICS_REVERSE);
-    intakeExtension.set(Value.kReverse);
+   intakeExtension = new DoubleSolenoid(Constants.PNEUMATICS_PCM_ID, Constants.INTAKE_PNEUMATICS_TYPE, 
+   Constants.INTAKE_PNEUMATICS_FORWARD, Constants.INTAKE_PNEUMATICS_REVERSE);
+   intakeExtension.set(Value.kReverse);
     intakeMotor = new VictorSPX(Constants.INTAKE_MOTOR_ID);
     colorSensor = new ColorSensorV3(Port.kOnboard);
 

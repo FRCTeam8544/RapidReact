@@ -17,13 +17,13 @@ import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   /** Creates a new Shooter. */
-  CANSparkMax shooterWheel1;
-  CANSparkMax shooterWheel2;
+  public CANSparkMax shooterWheel1;
+  public CANSparkMax shooterWheel2;
 
   RelativeEncoder shooter1Encoder;
   RelativeEncoder shooter2Encoder;
 
-  VictorSPX feeder;
+  public VictorSPX feeder;
   DigitalInput feederLimitSwitch;
   boolean allowLimitChecks;
   boolean totalLimitOverride;

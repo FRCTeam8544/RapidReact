@@ -41,9 +41,6 @@ public class Autonomous extends CommandBase {
   @Override
   public void initialize() {
     timer.reset();
-    a_movedistance.moveRobot("forward", 120);
-    Timer.delay(5);
-    a_movedistance.moveRobot("backward", 120);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -51,6 +48,10 @@ public class Autonomous extends CommandBase {
   public void execute() {
     timer.start();
     SmartDashboard.putNumber("Timer", timer.get());
+    
+    a_movedistance.moveRobot("forward", 120);
+    Timer.delay(5);
+    a_movedistance.moveRobot("backward", 120);
   }
 
   // Called once the command ends or is interrupted.

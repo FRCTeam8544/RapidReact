@@ -10,6 +10,7 @@ import com.revrobotics.RelativeEncoder;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -88,11 +89,33 @@ public class DriveTrain extends SubsystemBase {
   public void arcadeDrive(double xSpeed, double zRotation){
     robotDrive.arcadeDrive(xSpeed, zRotation);
   }
-  public void resetEncoders() {
-    encoderDM1.setPosition(0);
-    encoderDM2.setPosition(0);
-    encoderDM3.setPosition(0);
-    encoderDM4.setPosition(0);
+  public void resetEncoder(RelativeEncoder encoderName) {
+    encoderName.setPosition(0);
+  }
+
+  public double currentRM(RelativeEncoder encoderName){
+    return encoderName.getPosition();
+  }
+
+  public double distanceToEncoderPositionConversion(double inputedInches){
+    double distance = inputedInches;
+    double wheelDiameter = 6;
+    double wheelCircumference = Math.PI * wheelDiameter;
+    double gearRatio = 10.71;
+    double wheelRevPerInch = 1 / wheelCircumference;
+
+    return distance * wheelRevPerInch * gearRatio;
+  }
+
+  public double encoderPositionToDistanceConversion(RelativeEncoder encoderName){
+    double encoderPosition = encoderName.getPosition();
+    double outputInches;
+    double wheelDiameter = 6;
+    double wheelCircumference = Math.PI * wheelDiameter;
+    double gearRatio = 10.71;
+    double wheelRevPerInch = 1 / wheelCircumference;
+
+    return encoderPosition / (wheelRevPerInch*gearRatio);
   }
 
   @Override

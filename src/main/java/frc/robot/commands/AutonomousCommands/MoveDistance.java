@@ -35,7 +35,8 @@ public class MoveDistance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    a_drivetrain.resetEncoders();
+    a_drivetrain.resetEncoder(a_drivetrain.encoderDM1);
+    a_drivetrain.resetEncoder(a_drivetrain.encoderDM2);
     SmartDashboard.putNumber("encoder1", a_drivetrain.encoderDM1.getPosition());
     SmartDashboard.putNumber("encoder2", a_drivetrain.encoderDM2.getPosition());
     SmartDashboard.putNumber("rotations?", a_drivetrain.encoderDM1.getPosition()/10.71);
@@ -70,7 +71,8 @@ public class MoveDistance extends CommandBase {
   }
 
   public void moveRobot(String direction, double distance) {
-    a_drivetrain.resetEncoders();
+    a_drivetrain.resetEncoder(a_drivetrain.encoderDM1);
+    a_drivetrain.resetEncoder(a_drivetrain.encoderDM2);
     if (direction.equals("forward")) {
       target = -distance;
     } else if (direction.equals("backward")) {
