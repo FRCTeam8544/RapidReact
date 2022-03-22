@@ -59,17 +59,15 @@ public class DriveDistance extends CommandBase {
   @Override
   public boolean isFinished() {
     if (a_driveTrain.currentRM(a_driveTrain.encoderDM1) > 0){
-      if (a_driveTrain.currentRM(a_driveTrain.encoderDM1) == a_driveTrain.distanceToEncoderPositionConversion(inputedInches)){
-        returnValue = true;
-      }
+      return (a_driveTrain.currentRM(a_driveTrain.encoderDM1) >= a_driveTrain.distanceToEncoderPositionConversion(inputedInches));
     }
+
     else if (a_driveTrain.currentRM(a_driveTrain.encoderDM1) < 0){
-      if (a_driveTrain.currentRM(a_driveTrain.encoderDM1) == -a_driveTrain.distanceToEncoderPositionConversion(inputedInches)){
-        returnValue = true;
-      }
+      return ((-1) * (a_driveTrain.currentRM(a_driveTrain.encoderDM1)) >= a_driveTrain.distanceToEncoderPositionConversion(inputedInches));
     }
-
-    return returnValue;
+    
+    else {
+      return false;
+    }
   }
-}
-
+} 
