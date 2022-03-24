@@ -23,9 +23,7 @@ public class RotateDegrees extends CommandBase {
     a_driveTrain = drive;
     inputedDegrees = degreesToTravel;
     inputedSpeed = speedPercentage;
-    inchesToTravel = (Math.abs(inputedDegrees)/360 * 22.5 * Math.PI);
-    
-
+    inchesToTravel = (Math.abs(inputedDegrees)/360 * 21 * Math.PI);
     addRequirements(a_driveTrain);
 
     a_timer = new Timer();
@@ -44,10 +42,10 @@ public class RotateDegrees extends CommandBase {
   @Override
   public void execute() {
     if (inputedDegrees < 0) {
-    a_driveTrain.tankDrive(inputedSpeed, -inputedSpeed);
+    a_driveTrain.tankDrive(-inputedSpeed, inputedSpeed);
     }
     if (inputedDegrees > 0) {
-      a_driveTrain.tankDrive(-inputedSpeed, inputedSpeed);
+      a_driveTrain.tankDrive(inputedSpeed, -inputedSpeed);
     }
     SmartDashboard.putNumber("inchesToTravel", inchesToTravel);
     SmartDashboard.putNumber("Distance Traveled", a_driveTrain.encoderPositionToDistanceConversion(a_driveTrain.encoderDM1));
@@ -65,10 +63,10 @@ public class RotateDegrees extends CommandBase {
   @Override
   public boolean isFinished() {
     if (a_driveTrain.currentRM(a_driveTrain.encoderDM1) > 0){
-      return (a_driveTrain.currentRM(a_driveTrain.encoderDM1) == a_driveTrain.distanceToEncoderPositionConversion(inchesToTravel));
+      return (a_driveTrain.currentRM(a_driveTrain.encoderDM1) >= a_driveTrain.distanceToEncoderPositionConversion(inchesToTravel));
     }
     else if (a_driveTrain.currentRM(a_driveTrain.encoderDM1) < 0){
-      return (a_driveTrain.currentRM(a_driveTrain.encoderDM1) == -a_driveTrain.distanceToEncoderPositionConversion(inchesToTravel));  
+      return (a_driveTrain.currentRM(a_driveTrain.encoderDM1) <= -a_driveTrain.distanceToEncoderPositionConversion(inchesToTravel));  
     }
     else {
       return false;
