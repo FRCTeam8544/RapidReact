@@ -8,19 +8,19 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.AutoFeeder;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
 public class AutoIntakeRoutine extends CommandBase {
   /** Creates a new AutoIntakeRoutine. */
-  AutoFeeder a_feeder;
- // Intake a_intake;
-  Timer intakeTimer;
+  Feeder a_feeder;
+ //Intake a_intake;
+ Timer intakeTimer;
   double inputedIntakePowerPercentage;
   double inputedDelayTime;
 
-  public AutoIntakeRoutine(double intakePowerPercentage, double delayTime, Intake intake, AutoFeeder feed) {
+  public AutoIntakeRoutine(double intakePowerPercentage, double delayTime, Feeder feed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
   //  a_intake = intake;
@@ -46,10 +46,10 @@ public class AutoIntakeRoutine extends CommandBase {
   @Override
   public void execute() {
     if (intakeTimer.get() >= inputedDelayTime){
-      a_feeder.ar_feeder.set(ControlMode.PercentOutput, inputedIntakePowerPercentage);
+      a_feeder.feeder.set(ControlMode.PercentOutput, inputedIntakePowerPercentage);
     }
     else {
-      a_feeder.ar_feeder.set(ControlMode.PercentOutput, 0);
+      a_feeder.feeder.set(ControlMode.PercentOutput, 0);
       
     }
   }
@@ -57,7 +57,7 @@ public class AutoIntakeRoutine extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    a_feeder.ar_feeder.set(ControlMode.PercentOutput, 0);
+    a_feeder.feeder.set(ControlMode.PercentOutput, 0);
   }
 
   // Returns true when the command should end.

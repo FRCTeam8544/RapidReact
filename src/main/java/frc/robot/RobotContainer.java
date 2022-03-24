@@ -15,7 +15,7 @@ import frc.robot.commands.AutonomousCommands.AutoShootRoutine;
 import frc.robot.commands.AutonomousCommands.AutonomousRoutine;
 import frc.robot.commands.AutonomousCommands.DriveDistance;
 import frc.robot.commands.AutonomousCommands.MoveDistance;
-import frc.robot.subsystems.AutoFeeder;
+import frc.robot.subsystems.Feeder;
 //import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -43,16 +43,16 @@ public class RobotContainer {
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
   private final Intake m_intake = new Intake();
-  private final AutoFeeder a_feeder = new AutoFeeder();
+  private final Feeder m_feeder = new Feeder();
   
 
   //robot commands 
   private final MoveDistance m_moveDistance = new MoveDistance(m_drivetrain, 0.8);
   private final Autonomous m_autoCommand = new Autonomous(m_moveDistance, m_shooter, m_intake);
   private final DriveDistance a_DriveDistance = new DriveDistance(24, 0.25, m_drivetrain);
-  private final AutoIntakeRoutine a_AutoIntakeRoutine = new AutoIntakeRoutine(0.25, 3, m_intake, a_feeder);
+ // private final AutoIntakeRoutine a_AutoIntakeRoutine = new AutoIntakeRoutine(0.25, 3, m_intake, a_feeder);
   private final AutoShootRoutine a_AutoShootRoutine = new AutoShootRoutine(0.25, 4, m_shooter);
-  private final AutonomousRoutine a_AutonomousRoutine = new AutonomousRoutine(m_drivetrain, a_feeder, m_shooter, m_intake);
+  private final AutonomousRoutine a_AutonomousRoutine = new AutonomousRoutine(m_drivetrain, m_feeder, m_shooter, m_intake);
   
   //private final TankDrive m_tankDrive = new TankDrive(m_drivetrain);
   private final DriveControl m_driveControl = new DriveControl(m_drivetrain);
@@ -103,16 +103,16 @@ public class RobotContainer {
   .whenReleased(() -> m_intake.stopMotor());
 
   new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_SHOOTER_FEED_IN)
-  .whenPressed(() -> m_shooter.runFeederIn())
-  .whenReleased(() -> m_shooter.stopFeeder());
+  .whenPressed(() -> m_feeder.runFeederIn())
+  .whenReleased(() -> m_feeder.stopFeeder());
 
   new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_SHOOTER_FEED_OUT)
-  .whenPressed(() -> m_shooter.runFeederOut())
-  .whenReleased(() -> m_shooter.stopFeeder());
+  .whenPressed(() -> m_feeder.runFeederOut())
+  .whenReleased(() -> m_feeder.stopFeeder());
   
   new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_OVERRIDE_FEEDER)
-  .whenPressed(() -> m_shooter.runFeederInOverride())
-  .whenReleased(() -> m_shooter.stopFeeder());
+  .whenPressed(() -> m_feeder.runFeederInOverride())
+  .whenReleased(() -> m_feeder.stopFeeder());
   }
 
 

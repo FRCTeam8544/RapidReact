@@ -23,11 +23,6 @@ public class Shooter extends SubsystemBase {
   RelativeEncoder shooter1Encoder;
   RelativeEncoder shooter2Encoder;
 
-  public VictorSPX feeder;
-  DigitalInput feederLimitSwitch;
-  boolean allowLimitChecks;
-  boolean totalLimitOverride;
-
   //SparkMaxPIDController shooterPIDController;
 
   /*double kP;
@@ -62,7 +57,7 @@ public class Shooter extends SubsystemBase {
     shooter2Encoder = shooterWheel2.getEncoder();
     shooter1Encoder = shooterWheel1.getEncoder();
 
-    feeder = new VictorSPX(Constants.SHOOTER_FEED_MOTOR_ID);
+
 
     //shooterPIDController = shooterWheel2.getPIDController();
 
@@ -90,10 +85,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Min Output: " , minOutput);
     SmartDashboard.putNumber("Max Output: ", maxOutput);*/
 
-    
-    
-    feederLimitSwitch = new DigitalInput(0);
-    totalLimitOverride = false;
+  
 
   }
 
@@ -122,27 +114,7 @@ public class Shooter extends SubsystemBase {
     shooterWheel2.set(0);
   }*/
 
-  public void runFeederIn() {
-    if (feederLimitSwitch.get()) {
-      feeder.set(VictorSPXControlMode.PercentOutput, 0.40); 
-    }
-  }
-
-  public void runFeederInOverride() {
-      totalLimitOverride = true;
-    feeder.set(VictorSPXControlMode.PercentOutput, 0.75); 
-  }
-
-  public void runFeederOut() {
-    totalLimitOverride = true;
-    feeder.set(VictorSPXControlMode.PercentOutput, -0.40);
-  }
-
-  public void stopFeeder() {
-    totalLimitOverride = false;
-    feeder.set(VictorSPXControlMode.PercentOutput, 0);
-  }
-
+ 
 
 
   @Override
@@ -190,10 +162,5 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Processed Variable: ", shooter2Encoder.getVelocity());*/
 
     shooterWheel2.set(setPoint);
-    
-    if (!totalLimitOverride) 
-        if (!feederLimitSwitch.get()) {
-          stopFeeder();
-        }
   }  
 }
