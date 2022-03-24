@@ -4,11 +4,16 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AutoFeeder extends SubsystemBase {
   /** Creates a new AutoFeeder. */
-  public AutoFeeder() {}
+  public VictorSPX ar_feeder;
+  public AutoFeeder() {
+    ar_feeder = new VictorSPX(8);
+  }
 
   @Override
   public void periodic() {
