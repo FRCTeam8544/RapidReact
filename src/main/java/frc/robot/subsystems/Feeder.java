@@ -15,7 +15,6 @@ public class Feeder extends SubsystemBase {
   /** Creates a new AutoFeeder. */
   public VictorSPX feeder;
   DigitalInput feederLimitSwitch;
-  boolean allowLimitChecks;
   boolean totalLimitOverride;
 
   

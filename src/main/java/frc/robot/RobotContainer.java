@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.AutonomousCommands.AutoIntakeRoutine;
+import frc.robot.commands.AutonomousCommands.AutoFeedRoutine;
 import frc.robot.commands.AutonomousCommands.AutoShootRoutine;
 import frc.robot.commands.AutonomousCommands.AutonomousRoutine;
 import frc.robot.commands.AutonomousCommands.DriveDistance;
@@ -50,7 +50,7 @@ public class RobotContainer {
   private final MoveDistance m_moveDistance = new MoveDistance(m_drivetrain, 0.8);
   private final Autonomous m_autoCommand = new Autonomous(m_moveDistance, m_shooter, m_intake);
   private final DriveDistance a_DriveDistance = new DriveDistance(24, 0.25, m_drivetrain);
- // private final AutoIntakeRoutine a_AutoIntakeRoutine = new AutoIntakeRoutine(0.25, 3, m_intake, a_feeder);
+  private final AutoFeedRoutine a_AutoFeedRoutine = new AutoFeedRoutine(0.25, 3, m_feeder);
   private final AutoShootRoutine a_AutoShootRoutine = new AutoShootRoutine(0.25, 4, m_shooter);
   private final AutonomousRoutine a_AutonomousRoutine = new AutonomousRoutine(m_drivetrain, m_feeder, m_shooter, m_intake);
   

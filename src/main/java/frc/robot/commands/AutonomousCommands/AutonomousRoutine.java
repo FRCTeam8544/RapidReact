@@ -31,7 +31,7 @@ public class AutonomousRoutine extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands( 
         
-      new ParallelDeadlineGroup(new AutoShootRoutine(0.50, 4, ar_shooter), new AutoIntakeRoutine(0.5, 10, ar_feeder)),
+      new ParallelDeadlineGroup(new AutoShootRoutine(0.50, 4, ar_shooter), new AutoFeedRoutine(0.5, 10, ar_feeder)),
       new DriveDistance(24, 0.50, ar_driveTrain)
 
     
