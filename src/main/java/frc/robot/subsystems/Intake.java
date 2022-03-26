@@ -41,7 +41,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void runMotorForward() {
-    intakeMotor.set(VictorSPXControlMode.PercentOutput, -0.75);
+    intakeMotor.set(VictorSPXControlMode.PercentOutput, -0.1);
   }
 
   public void stopMotor() {
@@ -49,7 +49,7 @@ public class Intake extends SubsystemBase {
   }
 
   public void runMotorBackward() {
-    intakeMotor.set(VictorSPXControlMode.PercentOutput, 0.75);
+    intakeMotor.set(VictorSPXControlMode.PercentOutput, 0.1);
   }
 
 

@@ -15,11 +15,9 @@ import frc.robot.commands.AutonomousCommands.AutoShootRoutine;
 import frc.robot.commands.AutonomousCommands.AutonomousRoutine;
 import frc.robot.commands.AutonomousCommands.DriveDistance;
 import frc.robot.commands.AutonomousCommands.MoveDistance;
-<<<<<<< HEAD
 import frc.robot.commands.AutonomousCommands.RotateDegrees;
-=======
 import frc.robot.subsystems.AutoFeeder;
->>>>>>> 10d13c167084c0ea3ed54d817e4f94d5ebf7a658
+import frc.robot.subsystems.ClimbingArm;
 //import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
@@ -47,19 +45,17 @@ public class RobotContainer {
   private final DriveTrain m_drivetrain = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
   private final Intake m_intake = new Intake();
+  private final ClimbingArm m_cArm = new ClimbingArm();
   private final AutoFeeder a_feeder = new AutoFeeder();
+  
   
 
   //robot commands 
   private final MoveDistance m_moveDistance = new MoveDistance(m_drivetrain, 0.8);
   private final Autonomous m_autoCommand = new Autonomous(m_moveDistance, m_shooter, m_intake);
   private final DriveDistance a_DriveDistance = new DriveDistance(24, 0.25, m_drivetrain);
-<<<<<<< HEAD
   private final RotateDegrees a_RotateDegrees = new RotateDegrees(90, 0.25, m_drivetrain);
-  private final AutoIntakeRoutine a_AutoIntakeRoutine = new AutoIntakeRoutine(0.25, 3, m_intake, m_shooter);
-=======
   private final AutoIntakeRoutine a_AutoIntakeRoutine = new AutoIntakeRoutine(0.25, 3, m_intake, a_feeder);
->>>>>>> 10d13c167084c0ea3ed54d817e4f94d5ebf7a658
   private final AutoShootRoutine a_AutoShootRoutine = new AutoShootRoutine(0.25, 4, m_shooter);
   private final AutonomousRoutine a_AutonomousRoutine = new AutonomousRoutine(m_drivetrain, a_feeder, m_shooter, m_intake);
   
@@ -69,7 +65,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-
+    
     //defining default commands
     m_drivetrain.setDefaultCommand(m_driveControl);
   }
@@ -122,6 +118,8 @@ public class RobotContainer {
   new JoystickButton(HIDController, Constants.ROBOTCONTAINER_CONTROLLER_OVERRIDE_FEEDER)
   .whenPressed(() -> m_shooter.runFeederInOverride())
   .whenReleased(() -> m_shooter.stopFeeder());
+
+  
   }
 
 
