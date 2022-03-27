@@ -8,48 +8,48 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.AutoFeeder;
+import frc.robot.subsystems.Feeder;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 
-public class AutoIntakeRoutine extends CommandBase {
+public class AutoFeedRoutine extends CommandBase {
   /** Creates a new AutoIntakeRoutine. */
-  AutoFeeder a_feeder;
- // Intake a_intake;
-  Timer intakeTimer;
-  double inputedIntakePowerPercentage;
+  Feeder a_feeder;
+ //Intake a_intake;
+ Timer feedTimer;
+  double inputedFeedPowerPercentage;
   double inputedDelayTime;
 
-  public AutoIntakeRoutine(double intakePowerPercentage, double delayTime, Intake intake, AutoFeeder feed) {
+  public AutoFeedRoutine(double feedPowerPercentage, double delayTime, Feeder feed) {
     // Use addRequirements() here to declare subsystem dependencies.
 
   //  a_intake = intake;
     a_feeder = feed;
-    inputedIntakePowerPercentage = intakePowerPercentage;
+    inputedFeedPowerPercentage = feedPowerPercentage;
     inputedDelayTime = delayTime;
 
   //  addRequirements(a_intake);
     addRequirements(a_feeder);
 
-    intakeTimer = new Timer();
+    feedTimer = new Timer();
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeTimer.reset();
-    intakeTimer.start();
+    feedTimer.reset();
+    feedTimer.start();
 
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (intakeTimer.get() >= inputedDelayTime){
-      a_feeder.ar_feeder.set(ControlMode.PercentOutput, inputedIntakePowerPercentage);
+    if (feedTimer.get() >= inputedDelayTime){
+      a_feeder.feeder.set(ControlMode.PercentOutput, inputedFeedPowerPercentage);
     }
     else {
-      a_feeder.ar_feeder.set(ControlMode.PercentOutput, 0);
+      a_feeder.feeder.set(ControlMode.PercentOutput, 0);
       
     }
   }
@@ -57,7 +57,7 @@ public class AutoIntakeRoutine extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    a_feeder.ar_feeder.set(ControlMode.PercentOutput, 0);
+    a_feeder.feeder.set(ControlMode.PercentOutput, 0);
   }
 
   // Returns true when the command should end.

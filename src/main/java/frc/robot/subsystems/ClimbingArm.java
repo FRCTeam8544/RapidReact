@@ -30,11 +30,11 @@ public class ClimbingArm extends SubsystemBase {
     dPadValue = RobotContainer.HIDController.getPOV();
     
     if ((dPadValue >= 0 && dPadValue <= 10) || (dPadValue >= 350 && dPadValue < 360)) {
-      extentionMotor.set(ControlMode.PercentOutput, -0.5);
+      extentionMotor.set(ControlMode.PercentOutput, -0.75);
     }
     else if (dPadValue > 170 && dPadValue < 190) {
       if (armLimitSwitch.get()) {
-      extentionMotor.set(ControlMode.PercentOutput, 0.5);
+      extentionMotor.set(ControlMode.PercentOutput, 0.75);
       } else {
         extentionMotor.set(ControlMode.PercentOutput, 0);
       }
