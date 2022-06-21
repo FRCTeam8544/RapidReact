@@ -4,13 +4,11 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 //import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.SparkMaxPIDController;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,9 +21,9 @@ public class Shooter extends SubsystemBase {
   RelativeEncoder shooter1Encoder;
   RelativeEncoder shooter2Encoder;
 
-  //SparkMaxPIDController shooterPIDController;
+  /*SparkMaxPIDController shooterPIDController;
 
-  /*double kP;
+  double kP;
   double kI;
   double kD;
   double kIz;
@@ -42,7 +40,7 @@ public class Shooter extends SubsystemBase {
   double max;
   double min;*/
   double setPoint;
-
+  
   public Shooter() {
     shooterWheel2 = new CANSparkMax(Constants.SHOOTER_MOTOR2_ID, Constants.SHOOTER_MOTOR2_MOTORTYPE);
     shooterWheel1 = new CANSparkMax(Constants.SHOOTER_MOTOR1_ID, Constants.SHOOTER_MOTOR1_MOTORTYPE);
@@ -59,18 +57,18 @@ public class Shooter extends SubsystemBase {
 
 
 
-    //shooterPIDController = shooterWheel2.getPIDController();
-
-    /*kP = 0.00005;
+    /*shooterPIDController = shooterWheel2.getPIDController();
+    
+    kP = 0.00005;
     kI = 0;
     kD = 0;
     kIz = 0;
     kFF = 0.000015;
     maxOutput = 1;
-    minOutput = 0;*/
-    setPoint = 0;
-
-    /*shooterPIDController.setP(kP);
+    minOutput = 0;
+    */setPoint = 0;/*
+    
+    shooterPIDController.setP(kP);
     shooterPIDController.setI(kI);
     shooterPIDController.setD(kD);
     shooterPIDController.setIZone(kIz);
@@ -83,7 +81,7 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("I Zone: ", kIz);
     SmartDashboard.putNumber("Feed Forward Gain: ", kFF);
     SmartDashboard.putNumber("Min Output: " , minOutput);
-    SmartDashboard.putNumber("Max Output: ", maxOutput);*/
+    SmartDashboard.putNumber("Max Output: ", maxOutput); */
 
   
 
@@ -102,7 +100,7 @@ public class Shooter extends SubsystemBase {
       setPoint = 0;
     }
     else if (button == "yellow"){
-      setPoint = 0.75 ;
+      setPoint = 0.70 ;
     }
     else {
       SmartDashboard.putString("SetShooterSpeed: ", "No button pressed");
@@ -159,7 +157,7 @@ public class Shooter extends SubsystemBase {
     shooterPIDController.setReference(setPoint, CANSparkMax.ControlType.kSmartVelocity);
 
     SmartDashboard.putNumber("SetPoint", setPoint);
-    SmartDashboard.putNumber("Processed Variable: ", shooter2Encoder.getVelocity());*/
+    SmartDashboard.putNumber("Processed Variable: ", shooter2Encoder.getVelocity()); */
 
     shooterWheel2.set(setPoint);
   }  

@@ -9,8 +9,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Feeder;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Shooter;
 
 public class AutoFeedRoutine extends CommandBase {
   /** Creates a new AutoIntakeRoutine. */

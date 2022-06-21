@@ -84,8 +84,8 @@ public final class Constants {
     public static final int ROBOTCONTAINER_CONTROLLER_SHOOTER_FEED_OUT = 5;
     public static final int ROBOTCONTAINER_CONTROLLER_INTAKE_MOTOR_IN = 8;
     public static final int ROBOTCONTAINER_CONTROLLER_INTAKE_MOTOR_OUT = 6;
-    public static final int ROBOTCONTAINER_CONTROLLER_CLIMB_ARM_EXTEND = 10;
-    public static final int ROBOTCONTAINER_CONTROLLER_CLIMB_ARM_RETRACT = 9;
+    public static final int ROBOTCONTAINER_CONTROLLER_CLIMB_ARM_ROTATE = 10;
+    //public static final int ROBOTCONTAINER_CONTROLLER_CLIMB_ROUTINE = 9;
     public static final int ROBOTCONTAINER_CONTROLLER_OVERRIDE_FEEDER = 12;
 
     //joystick
@@ -101,6 +101,8 @@ public final class Constants {
     public static final int PNEUMATICS_PCM_ID = 10;
     public static final int INTAKE_PNEUMATICS_FORWARD = 1;
     public static final int INTAKE_PNEUMATICS_REVERSE = 0;
+    public static final int ARM_PNEUMATICS_OUT = 2;
+    public static final int ARM_PNEUMATICS_IN = 3;
 }
 
 

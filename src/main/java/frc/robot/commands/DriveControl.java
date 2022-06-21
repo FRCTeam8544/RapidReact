@@ -105,6 +105,7 @@ public class DriveControl extends CommandBase {
     rampup1.setTarget(rightJoystickPercentage);
     rampup2.setTarget(leftJoystickPercentage);
     //set speed to value from rampup
+    
     m_driveTrain.tankDrive(rampup2.getSpeed(), rampup1.getSpeed());
     }
     //run math

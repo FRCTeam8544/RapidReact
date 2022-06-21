@@ -1,0 +1,24 @@
+Robot info:
+    Robot 27 * 32
+    3 in. bumpers
+        33 * 38 w/ bumpers
+    Intake 12 in. extention
+        9 in. from bumper
+
+Shoot
+Move intakeside 31.44 in. w/ intake extended
+Rotate 114.195 degrees clockwise
+move intakeside 75.16 in w/intake extended
+rotate 24.195 degrees counterclockwise
+Shoot 2
+Rotate 49.06 degrees clockwise
+move intakeside 141.656 in.
+rotate 50.61 degrees counterclockwise
+move 29 in. w/ intake extended
+wait with intake extended 1 second
+rotate clockwise 21.59 degrees
+move shooterside 179.94 in.
+Shoot 2
+
+
+

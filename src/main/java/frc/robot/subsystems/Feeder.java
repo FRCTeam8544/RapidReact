@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -16,7 +17,8 @@ public class Feeder extends SubsystemBase {
   public VictorSPX feeder;
   DigitalInput feederLimitSwitch;
   boolean totalLimitOverride;
-
+  double speed;
+ 
   
   public Feeder() {
   feeder = new VictorSPX(Constants.SHOOTER_FEED_MOTOR_ID);
@@ -34,17 +36,27 @@ public class Feeder extends SubsystemBase {
 
   public void runFeederInOverride() {
       totalLimitOverride = true;
-    feeder.set(VictorSPXControlMode.PercentOutput, 0.75); 
+    feeder.set(VictorSPXControlMode.PercentOutput, 0.75);
+    SmartDashboard.putString("Feeder: ", "Running");
+    speed = 0.75;
   }
 
   public void runFeederOut() {
     totalLimitOverride = true;
     feeder.set(VictorSPXControlMode.PercentOutput, -0.40);
+    SmartDashboard.putString("Feeder: ", "Reverse");
+    speed = -0.40;
   }
 
   public void stopFeeder() {
     totalLimitOverride = false;
     feeder.set(VictorSPXControlMode.PercentOutput, 0);
+    SmartDashboard.putString("Feeder: ", "Stopped");
+    speed = 0;
+  }
+
+  public double feederSpeed() {
+    return speed;
   }
 
 
