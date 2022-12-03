@@ -5,7 +5,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.REVLibError;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMax.IdleMode;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
@@ -22,8 +24,8 @@ public class DriveTrain extends SubsystemBase {
   CANSparkMax driveMotor4;
 
   //DM# = drive motor #
-  RelativeEncoder encoderDM1;
-  RelativeEncoder encoderDM2;
+  public RelativeEncoder encoderDM1;
+  public RelativeEncoder encoderDM2;
   RelativeEncoder encoderDM3;
   RelativeEncoder encoderDM4;
 
@@ -33,6 +35,9 @@ public class DriveTrain extends SubsystemBase {
   MotorControllerGroup rightDM;
 
   DifferentialDrive robotDrive;
+  String driveType;
+  double leftDrivePercentage;
+  double rightDrivePercentage;
 
   public DriveTrain() {
     
@@ -63,16 +68,85 @@ public class DriveTrain extends SubsystemBase {
     encoderDM4 = driveMotor1.getEncoder(Constants.DRIVETRAIN_ENCODERDM4_ENCODERTYPE, Constants.DRIVETRAIN_ENCODERDM4_CPR);
 
     //&
-    leftDM = new MotorControllerGroup(driveMotor2, driveMotor4);
-    rightDM = new MotorControllerGroup(driveMotor1, driveMotor3);
+    rightDM = new MotorControllerGroup(driveMotor2, driveMotor4);
+    leftDM = new MotorControllerGroup(driveMotor1, driveMotor3);
 
     robotDrive = new DifferentialDrive(leftDM, rightDM);
 
+    driveType = "tank";
+    setIdleMode(IdleMode.kCoast);
+
   }
 
+  public void setDriveType(String type) {
+    driveType = type;
+  }
+
+  public String getDriveType() {
+    return driveType;
+  }
   //method which takes a percentage for each side and passes it to the speedcontroller group called robotDrive
   public void tankDrive(double leftPercentage, double rightPercentage){
+    leftDrivePercentage = leftPercentage;
+    rightDrivePercentage = rightPercentage;
     robotDrive.tankDrive(leftPercentage, rightPercentage);
+  }
+
+  public void arcadeDrive(double xSpeed, double zRotation){
+    robotDrive.arcadeDrive(xSpeed, zRotation);
+  }
+  public void resetEncoder(RelativeEncoder encoderName) {
+    encoderName.setPosition(0);
+  }
+
+  public double currentRM(RelativeEncoder encoderName){
+    return encoderName.getPosition();
+  }
+
+  public double leftMotorSpeed() {
+    return leftDrivePercentage;
+  }
+  public double rightMotorSpeed() {
+    return rightDrivePercentage;
+  }
+
+  public double distanceToEncoderPositionConversion(double inputedInches){
+    double distance = inputedInches;
+    double wheelDiameter = 6;
+    double wheelCircumference = Math.PI * wheelDiameter;
+    double gearRatio = 10.71;
+    double wheelRevPerInch = 1 / wheelCircumference;
+
+    return distance * wheelRevPerInch * gearRatio;
+  }
+
+  public double encoderPositionToDistanceConversion(RelativeEncoder encoderName){
+    double encoderPosition = encoderName.getPosition();
+    double wheelDiameter = 6;
+    double wheelCircumference = Math.PI * wheelDiameter;
+    double gearRatio = 10.71;
+    double wheelRevPerInch = 1 / wheelCircumference;
+
+    return encoderPosition / (wheelRevPerInch*gearRatio);
+  }
+
+  public void setIdleMode(IdleMode mode) {
+    if (driveMotor1.setIdleMode(mode) != REVLibError.kOk) {
+      System.out.println("Could not set idle mode on drive motor 1");
+      System.exit(1);
+    }
+    if (driveMotor2.setIdleMode(mode) != REVLibError.kOk) {
+      System.out.println("Could not set idle mode on drive motor 2");
+      System.exit(1);
+    }
+    if (driveMotor3.setIdleMode(mode) != REVLibError.kOk) {
+      System.out.println("Could not set idle mode on drive motor 3");
+      System.exit(1);
+    }
+    if (driveMotor4.setIdleMode(mode) != REVLibError.kOk) {
+      System.out.println("Could not set idle mode on drive motor 4");
+      System.exit(1);
+    }
   }
 
   @Override
